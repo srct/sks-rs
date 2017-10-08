@@ -23,6 +23,12 @@ Coming soon!
 
 Coming soon!
 
+### Development
+
+It'll be helpful to have [Docker](https://www.docker.com/) installed.
+
+There is a [`docker-compose.yml`](docker-compose.yml) that can be loaded using either `docker stack` or `docker compose`. Run `docker stack deploy -c docker-compose.yml postgres` or `docker-compose up` depending on which tool you prefer to use. This will start [Postgres](https://www.postgresql.org://www.postgresql.org/) on port `5432`, as well as an [Adminer](https://www.adminer.org/) on port `8080`.
+
 ### Known issues
 
 Coming soon!
