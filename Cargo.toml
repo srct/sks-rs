@@ -18,6 +18,7 @@ fern = "*"
 log = "*"
 chrono = "0.3"
 mime = "*"
+yaml-rust = "0.3"
 
 
 [lib]
