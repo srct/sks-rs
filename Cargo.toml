@@ -19,6 +19,7 @@ log = "*"
 chrono = "0.3"
 mime = "*"
 yaml-rust = "0.3"
+clap = {version = "2", features = ["yaml"]}
 
 
 [lib]
