@@ -44,12 +44,9 @@ fn main() {
         // We only care about the first document
         let doc: &Yaml = &docs[0];
 
-        let address: &str = &format!(
-            "{}:{}",
-            doc["hkp_address"].as_str().unwrap(),
-            doc["hkp_port"].as_i64().unwrap()
-        );
+        let address = doc["hkp_address"].as_str().unwrap();
+        let port = doc["hkp_port"].as_i64().unwrap();
 
-        sks_app_lib::start(&address);
+        sks_app_lib::start(&address, port);
     }
 }

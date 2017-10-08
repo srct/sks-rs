@@ -1,46 +1,31 @@
-extern crate hyper;
-extern crate gotham;
-extern crate mime;
+#![feature(try_from)]
+#![feature(plugin)]
+#![plugin(rocket_codegen)]
 
-use std::net::SocketAddr;
+extern crate rocket;
 
-use hyper::server::Http;
-use hyper::{Request, Response, StatusCode};
+use std::convert::TryFrom;
 
-use gotham::http::response::create_response;
-use gotham::state::State;
-use gotham::handler::NewHandlerService;
+use rocket::config::{Config, Environment};
 
-
-pub fn say_hello(state: State, _req: Request) -> (State, Response) {
-    let res = create_response(
-        &state,
-        StatusCode::Ok,
-        Some((
-            String::from("Hello World!").into_bytes(),
-            mime::TEXT_PLAIN,
-        )),
-    );
-
-    (state, res)
+#[get("/")]
+fn index() -> &'static str {
+    "Hello, world!"
 }
 
-pub fn start(address: &str) {
+
+
+pub fn start(address: &str, port: i64) {
     println!("Preparing to listen on http://{}", address);
-    let address: SocketAddr = address.parse().unwrap();
 
-    let server = Http::new()
-        .bind(&address, NewHandlerService::new(|| Ok(say_hello)))
+    let port: u16 = u16::try_from(port).unwrap();
+    let config = Config::build(Environment::Staging)
+        .address(address)
+        .port(port)
+        .finalize()
         .unwrap();
+    let app = rocket::custom(config, false);
+    app.mount("/", routes![index]).launch();
 
-    println!("Listening on http://{}", server.local_addr().unwrap());
-    server.run().unwrap();
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+    println!("Listening on http://{}:{}", address, port);
 }
