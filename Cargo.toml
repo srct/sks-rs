@@ -1,0 +1,29 @@
+[package]
+name = "sks"
+version = "0.1.0"
+authors = ["Kunal Sarkhel <ksarkhel@gmu.edu>"]
+
+[profile.release]
+lto = true
+
+[dependencies]
+gotham = "0.1.0"
+gotham_derive = "0.1.0"
+hyper = "0.11.2"
+futures = "*"
+serde = "*"
+serde_derive = "*"
+serde_urlencoded = "*"
+fern = "*"
+log = "*"
+chrono = "0.3"
+mime = "*"
+
+
+[lib]
+name = "sks_app_lib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "sks"
+path = "src/bin.rs"
