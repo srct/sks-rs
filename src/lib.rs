@@ -1,10 +1,7 @@
-#![feature(try_from)]
 #![feature(plugin)]
 #![plugin(rocket_codegen)]
 
 extern crate rocket;
-
-use std::convert::TryFrom;
 
 use rocket::config::{Config, Environment};
 
@@ -29,10 +26,9 @@ fn pks_add() -> &'static str {
 }
 
 
-pub fn start(address: &str, port: i64) {
+pub fn start(address: &str, port: u16) {
     println!("Preparing to listen on http://{}", address);
 
-    let port: u16 = u16::try_from(port).unwrap();
     let config = Config::build(Environment::Staging)
         .address(address)
         .port(port)

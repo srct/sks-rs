@@ -45,7 +45,7 @@ fn main() {
         let doc: &Yaml = &docs[0];
 
         let address = doc["hkp_address"].as_str().unwrap();
-        let port = doc["hkp_port"].as_i64().unwrap();
+        let port = doc["hkp_port"].as_i64().unwrap() as u16;
 
         sks_app_lib::start(&address, port);
     }
