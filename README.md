@@ -1,4 +1,6 @@
-# sks-rs
+# sks-rs (pronounced "scissors")
+[![Build Status](https://travis-ci.org/srct/sks-rs.svg?branch=master)](https://travis-ci.org/srct/sks-rs)
+
 Rust implementation of the Synchronizing Key Server for PGP keys.
 
 We will try to comply with the IETF Draft for [The OpenPGP HTTP Keyserver Protocol (HKP)](https://tools.ietf.org/html/draft-shaw-openpgp-hkp-00).
