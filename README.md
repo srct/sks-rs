@@ -1,5 +1,6 @@
 # sks-rs (pronounced "scissors")
 [![Build Status](https://travis-ci.org/srct/sks-rs.svg?branch=master)](https://travis-ci.org/srct/sks-rs)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Rust implementation of the Synchronizing Key Server for PGP keys.
 
