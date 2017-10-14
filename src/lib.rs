@@ -25,6 +25,12 @@ fn pks_add() -> &'static str {
     "pks_add"
 }
 
+fn server(app: rocket::Rocket) -> rocket::Rocket {
+    app.mount("/", routes![index])
+        .mount("/about", routes![about])
+        .mount("/pks/lookup", routes![pks_lookup])
+        .mount("/pks/add", routes![pks_add])
+}
 
 pub fn start(address: &str, port: u16) {
     println!("Preparing to listen on http://{}", address);
@@ -36,11 +42,24 @@ pub fn start(address: &str, port: u16) {
         .unwrap();
     let app = rocket::custom(config, false);
 
-    app.mount("/", routes![index])
-        .mount("/about", routes![about])
-        .mount("/pks/lookup", routes![pks_lookup])
-        .mount("/pks/add", routes![pks_add])
-        .launch();
+    server(app).launch();
 
     println!("Listening on http://{}:{}", address, port);
+}
+
+#[cfg(test)]
+mod test {
+    extern crate rocket;
+    use super::server;
+    use rocket::local::Client;
+    use rocket::http::Status;
+
+    #[test]
+    fn test_hello() {
+        let app_server = server(rocket::ignite());
+        let client = Client::new(app_server).expect("valid rocket instance");
+        let mut response = client.get("/").dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        assert_eq!(response.body_string(), Some("Hello, world!".into()));
+    }
 }
