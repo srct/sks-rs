@@ -1,9 +1,15 @@
 #![feature(plugin)]
+#![feature(custom_derive)]
 #![plugin(rocket_codegen)]
 
 extern crate rocket;
 
+use std::io::Cursor;
+
 use rocket::config::{Config, Environment};
+use rocket::request::Form;
+use rocket::response::Response;
+use rocket::http::Status;
 
 #[get("/")]
 fn index() -> &'static str {
@@ -20,9 +26,22 @@ fn pks_lookup() -> &'static str {
     "pks_lookup"
 }
 
-#[post("/")]
-fn pks_add() -> &'static str {
-    "pks_add"
+#[derive(FromForm)]
+struct AsciiArmoredKey {
+    keytext: String,
+}
+
+#[post("/", data = "<form>")]
+fn pks_add(form: Form<AsciiArmoredKey>) -> Response {
+    let keytext = &form.get().keytext;
+    if keytext.starts_with("-----BEGIN PGP PUBLIC KEY BLOCK-----") {
+        Response::build().status(Status::NotImplemented).finalize()
+    } else {
+        Response::build()
+            .status(Status::BadRequest)
+            .sized_body(Cursor::new("You must submit an ASCII Armored PGP Key"))
+            .finalize()
+    }
 }
 
 fn server(app: rocket::Rocket) -> rocket::Rocket {
@@ -33,23 +52,22 @@ fn server(app: rocket::Rocket) -> rocket::Rocket {
 }
 
 pub fn start(address: &str, port: u16) {
-    println!("Preparing to listen on http://{}", address);
+    println!("Preparing to listen on http://{}:{}/", address, port);
 
     let config = Config::build(Environment::Staging)
         .address(address)
         .port(port)
         .finalize()
         .unwrap();
-    let app = rocket::custom(config, false);
+    let app = rocket::custom(config, true);
 
     server(app).launch();
-
-    println!("Listening on http://{}:{}", address, port);
 }
 
 #[cfg(test)]
 mod test {
     extern crate rocket;
+
     use super::server;
     use rocket::local::Client;
     use rocket::http::Status;
