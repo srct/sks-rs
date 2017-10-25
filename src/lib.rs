@@ -56,7 +56,7 @@ impl<'v> FromFormValue<'v> for SearchOperation {
 #[derive(Debug)]
 #[derive(FromForm)]
 struct HkpRequestParameters {
-    op: SearchOperation,
+    op: Result<SearchOperation, &'static str>,
     search: String,
     mr: Option<String>,
     fingerprint: Option<String>,
@@ -67,9 +67,15 @@ struct HkpRequestParameters {
 fn pks_lookup(search_parameters: HkpRequestParameters) -> Result<Response<'static>, Status> {
     println!("{:?}", search_parameters);
     match search_parameters.op {
-        SearchOperation::Get => Response::build().status(Status::NotImplemented).ok(),
-        SearchOperation::Index => Response::build().status(Status::NotImplemented).ok(),
-        SearchOperation::VerboseIndex => Response::build().status(Status::NotImplemented).ok(),
+        Ok(SearchOperation::Get) => Response::build().status(Status::NotImplemented).ok(),
+        Ok(SearchOperation::Index) => Response::build().status(Status::NotImplemented).ok(),
+        Ok(SearchOperation::VerboseIndex) => Response::build().status(Status::NotImplemented).ok(),
+        Err(error) => {
+            Response::build()
+                .status(Status::UnprocessableEntity)
+                .sized_body(Cursor::new(error))
+                .ok()
+        }
     }
 }
 
