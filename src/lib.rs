@@ -4,12 +4,15 @@
 
 extern crate rocket;
 
+#[cfg(test)] mod tests;
+
 use std::io::Cursor;
 
 use rocket::config::{Config, Environment};
 use rocket::request::Form;
 use rocket::response::Response;
 use rocket::http::Status;
+
 
 #[get("/")]
 fn index() -> &'static str {
@@ -62,22 +65,4 @@ pub fn start(address: &str, port: u16) {
     let app = rocket::custom(config, true);
 
     server(app).launch();
-}
-
-#[cfg(test)]
-mod test {
-    extern crate rocket;
-
-    use super::server;
-    use rocket::local::Client;
-    use rocket::http::Status;
-
-    #[test]
-    fn test_hello() {
-        let app_server = server(rocket::ignite());
-        let client = Client::new(app_server).expect("valid rocket instance");
-        let mut response = client.get("/").dispatch();
-        assert_eq!(response.status(), Status::Ok);
-        assert_eq!(response.body_string(), Some("Hello, world!".into()));
-    }
 }
