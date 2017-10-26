@@ -7,11 +7,12 @@ extern crate rocket;
 #[cfg(test)] mod tests;
 
 use std::io::Cursor;
+use std::str::FromStr;
 
 use rocket::config::{Config, Environment};
-use rocket::request::Form;
+use rocket::request::{Form, FromFormValue};
 use rocket::response::Response;
-use rocket::http::Status;
+use rocket::http::{Status,RawStr};
 
 
 #[get("/")]
@@ -24,9 +25,58 @@ fn about() -> &'static str {
     "About"
 }
 
-#[get("/")]
-fn pks_lookup() -> &'static str {
-    "pks_lookup"
+#[derive(Debug)]
+enum SearchOperation {
+    Get,
+    Index,
+    VerboseIndex
+}
+
+impl FromStr for SearchOperation {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "get" => Ok(SearchOperation::Get),
+            "index" => Ok(SearchOperation::Index),
+            "vindex" => Ok(SearchOperation::VerboseIndex),
+            _ => Err("Invalid operation. Supported operations are 'get', 'index', and 'vindex'.")
+        }
+    }
+}
+
+impl<'v> FromFormValue<'v> for SearchOperation {
+    type Error = &'static str;
+
+    fn from_form_value(form_value: &'v RawStr) -> Result<Self, Self::Error> {
+        SearchOperation::from_str(form_value)
+    }
+}
+
+#[derive(Debug)]
+#[derive(FromForm)]
+struct HkpRequestParameters {
+    op: Result<SearchOperation, &'static str>,
+    search: String,
+    mr: Option<String>,
+    fingerprint: Option<String>,
+    exact: Option<String>
+}
+
+#[get("/?<search_parameters>")]
+fn pks_lookup(search_parameters: HkpRequestParameters) -> Result<Response<'static>, Status> {
+    println!("{:?}", search_parameters);
+    match search_parameters.op {
+        Ok(SearchOperation::Get) => Response::build().status(Status::NotImplemented).ok(),
+        Ok(SearchOperation::Index) => Response::build().status(Status::NotImplemented).ok(),
+        Ok(SearchOperation::VerboseIndex) => Response::build().status(Status::NotImplemented).ok(),
+        Err(error) => {
+            Response::build()
+                .status(Status::UnprocessableEntity)
+                .sized_body(Cursor::new(error))
+                .ok()
+        }
+    }
 }
 
 #[derive(FromForm)]
