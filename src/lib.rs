@@ -2,34 +2,40 @@
 #![feature(custom_derive)]
 #![plugin(rocket_codegen)]
 
+extern crate rocket_contrib;
 extern crate rocket;
 
-#[cfg(test)] mod tests;
-
+#[cfg(test)]
+mod tests;
 use std::io::Cursor;
 use std::str::FromStr;
 
-use rocket::config::{Config, Environment};
-use rocket::request::{Form, FromFormValue};
-use rocket::response::Response;
-use rocket::http::{Status,RawStr};
+use std::collections::HashMap;
 
+use rocket::config::{Config, Environment};
+use rocket::request::{Request, Form, FromFormValue};
+use rocket::response::Response;
+use rocket::http::{Status, RawStr};
+use rocket_contrib::Template;
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+fn index() -> Template {
+    let mut map = HashMap::new();
+    map.insert("name", "<strong>gmu</strong>keyserver");
+    Template::render("index", &map)
 }
 
 #[get("/")]
-fn about() -> &'static str {
-    "About"
+fn about() -> Template {
+    let map: HashMap<&str, &str> = HashMap::new();
+    Template::render("about", &map)
 }
 
 #[derive(Debug)]
 enum SearchOperation {
     Get,
     Index,
-    VerboseIndex
+    VerboseIndex,
 }
 
 impl FromStr for SearchOperation {
@@ -40,7 +46,9 @@ impl FromStr for SearchOperation {
             "get" => Ok(SearchOperation::Get),
             "index" => Ok(SearchOperation::Index),
             "vindex" => Ok(SearchOperation::VerboseIndex),
-            _ => Err("Invalid operation. Supported operations are 'get', 'index', and 'vindex'.")
+            _ => Err(
+                "Invalid operation. Supported operations are 'get', 'index', and 'vindex'.",
+            ),
         }
     }
 }
@@ -60,7 +68,7 @@ struct HkpRequestParameters {
     search: String,
     mr: Option<String>,
     fingerprint: Option<String>,
-    exact: Option<String>
+    exact: Option<String>,
 }
 
 #[get("/?<search_parameters>")]
@@ -97,11 +105,20 @@ fn pks_add(form: Form<AsciiArmoredKey>) -> Response {
     }
 }
 
+#[error(404)]
+fn not_found(req: &Request) -> Template {
+    let mut ctx = HashMap::new();
+    ctx.insert("path", req.uri().as_str());
+    Template::render("error/404", &ctx)
+}
+
 fn server(app: rocket::Rocket) -> rocket::Rocket {
     app.mount("/", routes![index])
         .mount("/about", routes![about])
         .mount("/pks/lookup", routes![pks_lookup])
         .mount("/pks/add", routes![pks_add])
+        .attach(Template::fairing())
+        .catch(errors![not_found])
 }
 
 pub fn start(address: &str, port: u16) {
