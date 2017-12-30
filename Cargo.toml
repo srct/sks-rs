@@ -7,12 +7,12 @@ authors = ["Kunal Sarkhel <ksarkhel@gmu.edu>"]
 lto = true
 
 [dependencies]
-rocket = "0.3.3"
-rocket_codegen = "0.3.3"
+rocket = ">= 0.3.3"
+rocket_codegen = ">= 0.3.3"
+rocket_contrib = {version = "*", features = ["tera_templates"]}
 log = "*"
-yaml-rust = "0.3"
+yaml-rust = ">= 0.3"
 clap = {version = "2", features = ["yaml"]}
-
 
 [lib]
 name = "sks_app_lib"
