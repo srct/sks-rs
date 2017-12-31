@@ -1,16 +1,15 @@
 {% extends "base" %}
 
-{% block title %}404{% endblock title %}
+{% block title %}About{% endblock title %}
 
 {% block content %}
-<main role="main" class="container">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col col-lg-6">
-                <h1>About</h1>
-                <p class="lead">Hmm. We haven't written this page yet.</p>
-                <p>Perhaps you could help. You can contribute to <a href="https://github.com/srct/sks-rs">our GitHub repository</a>.</p>
-            </div>
+<main role="main">
+    <div class="container-fluid d-flex align-items-center h-100 justify-content-center">
+        <div class="col col-lg-6">
+            <h1>About</h1>
+            <br />
+            <p class="lead">Hmm. We haven't written this page yet.</p>
+            <p>Perhaps you could help. You can contribute to <a href="https://github.com/srct/sks-rs">our GitHub repository</a>.</p>
         </div>
     </div>
 </main>

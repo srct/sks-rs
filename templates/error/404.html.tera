@@ -3,14 +3,14 @@
 {% block title %}404{% endblock title %}
 
 {% block content %}
-<main role="main" class="container">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col col-lg-6">
-                <h1>404: There's nothing here.</h1>
-                <p class="lead">The page at {{ path }} does not exist!</p>
-                <p>If a bad link led you here, consider <a href="https://github.com/srct/sks-rs/issues/new">reporting an issue</a>.</p>
-            </div>
+<main role="main">
+    <div class="container-fluid d-flex align-items-center h-100">
+        <div class="col col-lg-12 text-center">
+            <h1>404: Hey! There's nothing here.</h1>
+
+            <br />
+            <p class="lead">The page at {{ path }} does not exist!</p>
+            <p>If a bad link led you here, consider <a href="https://github.com/srct/sks-rs/issues/new">reporting an issue</a>.</p>
         </div>
     </div>
 </main>

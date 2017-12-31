@@ -3,53 +3,53 @@
 {% block title %}GMU Keyserver{% endblock title %}
 
 {% block content %}
-<main role="main" class="container">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col col-lg-12">
-                <h1 class="text-center">{{ name | safe }}</h1>
+<main role="main">
+    <div class="container-fluid d-flex align-items-center h-100">
+        <div class="col col-lg-12">
+            <div class="row justify-content-center">
+                <div class="col col-lg-12">
+                    <h1 class="text-center">{{ name | safe }}</h1>
+                </div>
             </div>
-            <div class="col col-lg-8">
-                <form id="lookup" action="/pks/lookup" method="get" class="form" role="form" autocomplete="off">
-                    <div class="control-group">
-                        <div class="controls">
-                            <input name="search" id="search" class="form-control" type="text" style="font-size: 1.5em; line-height: 1.5em; height: 2em;"/>
-                        </div>
-                    </div>
-                    <div class="control-group text-center" style="margin-top: 0.5em;">
-                        <div class="controls">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">Search Key</button>
-                            <a class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal">Submit Key</a>
-                        </div>
-                    </div>
-                    <div class="text-center" style="margin-top: 0.5em;">
-                        <a data-toggle="collapse" data-target="#advancedOptionsCollapse" href="#">Advanced Options</a>
-                    </div>
-                    <div id="advancedOptionsCollapse" class="collapse">
-                        <div class="form-row">
-                            <div class="col custom-controls-stacked ml-5 mt-3 mb-3">
-                                <label class="checkbox" for="fingerprint">
-                                <input type="checkbox" name="fingerprint" checked="checked" />
-                                Show OpenPGP "fingerprints" for keys
-                                </label>
-                                <label for="radios-0">
-                                <input name="op" id="radios-0" value="index" checked="checked" type="radio">
-                                Get regular index of matching keys
-                                </label>
-                            </div>
-                            <div class="col custom-controls-stacked ml-5 mt-3 mb-3">
-                                <label class="checkbox" for="exact">
-                                <input type="checkbox" name="exact" />
-                                Only return exact matches
-                                </label>
-                                <label for="radios-1">
-                                <input name="op" id="radios-1" value="vindex" type="radio">
-                                Get <strong>verbose</strong> index of matching keys
-                                </label>
+            <div class="row justify-content-center">
+                <div class="col col-lg-8">
+                    <form id="lookup" action="/pks/lookup" method="get" class="form" role="form" autocomplete="off">
+                        <div class="control-group">
+                            <div class="controls">
+                                <input name="search" id="search" class="form-control" type="text" style="font-size: 1.5em; line-height: 1.5em; height: 2em;" />
                             </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="control-group text-center" style="margin-top: 0.5em;">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-outline-primary btn-lg">Search Key</button>
+                                <a class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal">Submit Key</a>
+                            </div>
+                        </div>
+                        <div class="text-center" style="margin-top: 0.5em;">
+                            <a data-toggle="collapse" data-target="#advancedOptionsCollapse" href="#">Advanced Options</a>
+                        </div>
+                        <div id="advancedOptionsCollapse" class="collapse">
+                            <div class="form-row">
+                                <div class="col custom-controls-stacked ml-5 mt-3 mb-3">
+                                    <label class="checkbox" for="fingerprint">
+                                        <input type="checkbox" name="fingerprint" checked="checked" /> Show OpenPGP "fingerprints" for keys
+                                    </label>
+                                    <label for="radios-0">
+                                        <input name="op" id="radios-0" value="index" checked="checked" type="radio"> Get regular index of matching keys
+                                    </label>
+                                </div>
+                                <div class="col custom-controls-stacked ml-5 mt-3 mb-3">
+                                    <label class="checkbox" for="exact">
+                                        <input type="checkbox" name="exact" /> Only return exact matches
+                                    </label>
+                                    <label for="radios-1">
+                                        <input name="op" id="radios-1" value="vindex" type="radio"> Get <strong>verbose</strong> index of matching keys
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -59,11 +59,13 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Submit PGP Key</h4>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Submit a PGP Key</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form action="/pks/add" method="post" id="keySubmitForm">
@@ -76,8 +78,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onClick="submitHandler();">Submit Key</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" onClick="submitHandler();">Submit Key</button>
                 </div>
             </div>
         </div>
