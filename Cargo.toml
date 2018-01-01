@@ -7,12 +7,15 @@ authors = ["Kunal Sarkhel <ksarkhel@gmu.edu>"]
 lto = true
 
 [dependencies]
-rocket = ">= 0.3.3"
-rocket_codegen = ">= 0.3.3"
-rocket_contrib = {version = "*", features = ["tera_templates"]}
+rocket = { git = "https://github.com/SergioBenitez/Rocket", branch = "v0.3" }
+rocket_codegen = { git = "https://github.com/SergioBenitez/Rocket", branch = "v0.3" }
+rocket_contrib = { git = "https://github.com/SergioBenitez/Rocket", branch = "v0.3", features = ["tera_templates"] }
 log = "*"
 yaml-rust = ">= 0.3"
 clap = {version = "2", features = ["yaml"]}
+
+[patch.crates-io]
+ring = { git = "https://github.com/SergioBenitez/ring", branch = "v0.11" }
 
 [lib]
 name = "sks_app_lib"
