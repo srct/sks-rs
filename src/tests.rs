@@ -12,3 +12,22 @@ fn test_hello() {
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(response.body_string(), Some("Hello, world!".into()));
 }
+
+#fn test_read_keydump() {
+    let app_server = server(rocket::ignite());
+    let client= Client::new(app_server).expect("valid rocket instance");
+#}
+#fn test_import_key_validate() {
+    let app_server = server(rocket::ignite());
+    let client= Client::new(app_server).expect("valid rocket instance");
+#}    
+#fn test_submit_key_validate() {
+    let app_server = server(rocket::ignite());
+    let client= Client::new(app_server).expect("valid rocket instance");
+#}
+#fn test_
+# TODO:
+# Setup a test keydump read from local 'dummy keydump'  and/or preset keydump from $(keyserver)
+# Setup a test import_key from user input of ASCII-armored data.
+# Setup a test read of both import and returned data from $(keyserver)
+ 

@@ -1,0 +1,8 @@
+# Variables for CAS Login 
+
+
+# TODO:
+# ----   
+# 1) Variable-ize passwordstore so as no passwords/creds are hardcoded.
+# 2) Define how github/gitlab/CAS-LDAP will all resolve to a endpoint for secure offloading.
+# 3) 

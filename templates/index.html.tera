@@ -26,10 +26,8 @@
                             </div>
                         </div>
                         <div class="text-center" style="margin-top: 0.5em;">
-                            <a data-toggle="collapse" data-target="#advancedOptionsCollapse" href="#">Advanced Options</a>
-                        </div>
-                        <div id="advancedOptionsCollapse" class="collapse">
-                            <div class="form-row">
+                          </div>
+                          <div class="form-row">
                                 <div class="col custom-controls-stacked ml-5 mt-3 mb-3">
                                     <label class="checkbox" for="fingerprint">
                                         <input type="checkbox" name="fingerprint" checked="checked" /> Show OpenPGP "fingerprints" for keys
@@ -63,14 +61,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Submit a PGP Key</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                    </div>
                 <div class="modal-body">
                     <form action="/pks/add" method="post" id="keySubmitForm">
                         <div class="control-group">
-                            <label class="control-label" for="textarea">Enter an ASCII-armored OpenPGP key:</label>
+                            <label class="control-label" for="textarea">Enter your <strong> Public </strong>  ASCII-armored OpenPGP key:</label>
                             <div class="controls">
                                 <textarea id="textarea" name="keytext" rows="5" style="width: 100%;"></textarea>
                             </div>
@@ -78,7 +73,6 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-outline-primary" onClick="submitHandler();">Submit Key</button>
                 </div>
             </div>
