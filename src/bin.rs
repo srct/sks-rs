@@ -18,10 +18,10 @@ fn main() {
 
     // Always overrides config file
     let _verbosity = match matches.occurrences_of("v") {
-        0 => log::LogLevel::Error,
-        1 => log::LogLevel::Info,
-        2 => log::LogLevel::Debug,
-        3 | _ => log::LogLevel::Trace,
+        0 => log::Level::Error,
+        1 => log::Level::Info,
+        2 => log::Level::Debug,
+        3 | _ => log::Level::Trace,
     };
 
     // Gets a value for config if supplied by user, or defaults to "config.yml"

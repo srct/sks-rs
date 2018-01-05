@@ -10,7 +10,7 @@ lto = true
 rocket = { git = "https://github.com/SergioBenitez/Rocket", branch = "v0.3" }
 rocket_codegen = { git = "https://github.com/SergioBenitez/Rocket", branch = "v0.3" }
 rocket_contrib = { git = "https://github.com/SergioBenitez/Rocket", branch = "v0.3", features = ["tera_templates"] }
-log = "*"
+log = "0.4.1"
 yaml-rust = ">= 0.3"
 clap = {version = "2", features = ["yaml"]}
 
