@@ -2,3 +2,5 @@
 hkp_address: 0.0.0.0
 hkp_port: 11370
 database_url: postgresql://localhost:5432/sks?user=sks&password=sks
+name: <strong>gmu</strong>keyserver
+maintainer: ksarkhel@gmu.edu
