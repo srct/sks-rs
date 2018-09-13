@@ -105,7 +105,7 @@ fn pks_add(form: Form<AsciiArmoredKey>) -> Response {
     }
 }
 
-#[error(404)]
+#[catch(404)]
 fn not_found(req: &Request) -> Template {
     let mut ctx = HashMap::new();
     ctx.insert("path", req.uri().as_str());
@@ -118,7 +118,7 @@ fn server(app: rocket::Rocket) -> rocket::Rocket {
         .mount("/pks/lookup", routes![pks_lookup])
         .mount("/pks/add", routes![pks_add])
         .attach(Template::fairing())
-        .catch(errors![not_found])
+        .catch(catchers![not_found])
 }
 
 pub fn start(address: &str, port: u16) {
