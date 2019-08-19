@@ -7,8 +7,8 @@ services:
         image: postgres
         restart: always
         environment:
-            POSTGRES_USER: sks
-            POSTGRES_PASSWORD: sks
+            POSTGRES_USER: auth_keys_from_cas/postgres
+            POSTGRES_PASSWORD: sauth_keys_from_cas/postgres
             POSTGRES_DB: sks
         ports:
             - 5432:5432
